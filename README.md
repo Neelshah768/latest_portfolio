@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Neel Shah - Portfolio Website
 
-## Getting Started
+A professional, minimalist portfolio website built with Next.js 16, React 19, TypeScript, and Tailwind CSS v4.
 
-First, run the development server:
+## 🎨 Design Philosophy
+
+This portfolio follows a **top 1% professional design approach**:
+
+- **Minimalist Black & White Theme**: Clean, sophisticated color scheme that puts focus on content
+- **Subtle Animations**: Professional Framer Motion animations that enhance without distracting
+- **Perfect Typography**: Using Geist Sans and Geist Mono for optimal readability
+- **Responsive Design**: Looks perfect on all devices from mobile to desktop
+- **Fast & Performant**: Optimized for speed and SEO
+
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+├── app/
+│   ├── layout.tsx          # Root layout with metadata
+│   ├── page.tsx            # Main portfolio page
+│   └── globals.css         # Global styles & animations
+├── components/
+│   └── Navigation.tsx      # Navigation component
+└── public/                 # Static assets
+```
 
-## Learn More
+## 🎯 Sections Included
 
-To learn more about Next.js, take a look at the following resources:
+1. **Hero** - Professional introduction with availability status
+2. **Stats** - Key achievements and metrics
+3. **About** - Detailed professional summary
+4. **Experience** - Work history at PrometheanTech
+5. **Projects** - 73Strings & LivCast showcases
+6. **Skills** - Technical expertise organized by category
+7. **Hire Me** - Full-time, Part-time, and Freelance options
+8. **Contact** - Professional contact form
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework**: Next.js 16.0.0
+- **React**: 19.2.0
+- **TypeScript**: ^5
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Fonts**: Geist Sans & Geist Mono
 
-## Deploy on Vercel
+## 🎨 Customization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Update Personal Information
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Edit `/app/page.tsx` to update:
+- Personal details and introduction
+- Projects and achievements
+- Skills and technologies
+- Social media links
+
+### Color Scheme
+
+The professional color scheme is defined in `/app/globals.css`:
+- **Primary**: Black (#0a0a0a)
+- **Accent**: LinkedIn Blue (#0A66C2)
+- **Background**: White/Black (light/dark mode)
+
+### Metadata & SEO
+
+Update metadata in `/app/layout.tsx`:
+- Title, description, keywords
+- Open Graph tags
+- Author information
+
+## 📧 Contact Information
+
+- **Email**: shahneel20135@gmail.com
+- **Location**: Ahmedabad, India
+- **LinkedIn**: Update in page.tsx
+- **GitHub**: Update in page.tsx
+
+## 🌟 Features
+
+- ✅ Fully responsive design
+- ✅ Dark mode support
+- ✅ Smooth animations
+- ✅ SEO optimized
+- ✅ Type-safe with TypeScript
+- ✅ Fast page loads
+- ✅ Professional aesthetic
+- ✅ Grid background effects
+- ✅ Custom scrollbar styling
+
+## 📝 Next Steps
+
+1. Add your actual LinkedIn and GitHub URLs in `page.tsx`
+2. Add your resume PDF to the `/public` folder
+3. Optional: Add project images to `/public` folder
+4. Optional: Set up form backend for contact form
+5. Deploy to Vercel, Netlify, or your preferred host
+
+## 🚢 Deployment
+
+### Vercel (Recommended)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+### Other Platforms
+
+Build the project:
+```bash
+npm run build
+```
+
+Then deploy the `.next` folder to your hosting provider.
+
+## 📄 License
+
+© 2025 Neel Shah. All rights reserved.
+
+---
+
+Built with precision and attention to detail for a professional developer portfolio.
