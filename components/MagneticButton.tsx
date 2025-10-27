@@ -8,6 +8,8 @@ interface MagneticButtonProps {
   className?: string;
   href?: string;
   onClick?: () => void;
+  target?: string;
+  rel?: string;
 }
 
 export default function MagneticButton({
@@ -15,6 +17,8 @@ export default function MagneticButton({
   className = '',
   href,
   onClick,
+  target,
+  rel,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -38,6 +42,8 @@ export default function MagneticButton({
       ref={ref as any}
       href={href}
       onClick={onClick}
+      target={target as any}
+      rel={rel}
       className={className}
       onMouseMove={handleMouse}
       onMouseLeave={reset}

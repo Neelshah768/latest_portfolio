@@ -30,6 +30,8 @@ import ScrollProgress from '@/components/ScrollProgress';
 import MagneticButton from '@/components/MagneticButton';
 import FloatingParticles from '@/components/FloatingParticles';
 import Preloader from '@/components/Preloader';
+import dynamic from 'next/dynamic';
+const ChatWidget = dynamic(() => import('../components/ChatWidget'), { ssr: false });
 import { TypeAnimation } from 'react-type-animation';
 
 export default function Home() {
@@ -254,10 +256,11 @@ export default function Home() {
                 View My Work
               </MagneticButton>
               <MagneticButton
-                href="/resume.pdf"
+                href="https://drive.google.com/file/d/16aQCv5IoXCAwH2gfoenQahnU_RB8a-qL/view?usp=drive_link"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-8 py-4 border-2 border-zinc-200 dark:border-zinc-800 rounded-lg font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
               >
-                <Download size={20} />
                 Resume
               </MagneticButton>
             </motion.div>
@@ -688,6 +691,7 @@ export default function Home() {
           <p>© {new Date().getFullYear()} Neel Shah. All rights reserved.</p>
     </div>
       </footer>
+      <ChatWidget />
     </>
   );
 }
