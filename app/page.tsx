@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import {
   Github,
   Linkedin,
@@ -35,6 +36,39 @@ const ChatWidget = dynamic(() => import('../components/ChatWidget'), { ssr: fals
 import { TypeAnimation } from 'react-type-animation';
 
 export default function Home() {
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [contactStatus, setContactStatus] = useState<string | null>(null);
+
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setContactSubmitting(true);
+    setContactStatus(null);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get('name') || ''),
+      email: String(data.get('email') || ''),
+      subject: String(data.get('subject') || ''),
+      message: String(data.get('message') || ''),
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error || 'Failed to submit');
+      setContactStatus('Thanks! I will get back to you soon.');
+      form.reset();
+    } catch (err: any) {
+      setContactStatus(err?.message || 'Something went wrong. Please try again.');
+    } finally {
+      setContactSubmitting(false);
+    }
+  };
   const experiences = [
     {
       title: 'Full-Stack Software Developer',
@@ -608,13 +642,16 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 md:p-12"
           >
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleContactSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold mb-2">Name</label>
                   <input
                     type="text"
+                    name="name"
                     placeholder="Your name"
+                    required
+                    disabled={contactSubmitting}
                     className="w-full px-4 py-3 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white transition-all"
                   />
                 </div>
@@ -622,7 +659,10 @@ export default function Home() {
                   <label className="block text-sm font-semibold mb-2">Email</label>
                   <input
                     type="email"
+                    name="email"
                     placeholder="your@email.com"
+                    required
+                    disabled={contactSubmitting}
                     className="w-full px-4 py-3 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white transition-all"
                   />
                 </div>
@@ -632,7 +672,9 @@ export default function Home() {
                 <label className="block text-sm font-semibold mb-2">Subject</label>
                 <input
                   type="text"
+                  name="subject"
                   placeholder="How can I help?"
+                  disabled={contactSubmitting}
                   className="w-full px-4 py-3 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white transition-all"
                 />
               </div>
@@ -641,16 +683,24 @@ export default function Home() {
                 <label className="block text-sm font-semibold mb-2">Message</label>
                 <textarea
                   rows={6}
+                  name="message"
                   placeholder="Tell me about your project..."
+                  required
+                  disabled={contactSubmitting}
                   className="w-full px-4 py-3 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white transition-all resize-none"
                 />
               </div>
 
-              <MagneticButton className="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold flex items-center justify-center gap-2">
+              <MagneticButton className="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold flex items-center justify-center gap-2" 
+                onClick={() => {}}>
                 <Send size={20} />
-                Send Message
+                {contactSubmitting ? 'Sending...' : 'Send Message'}
               </MagneticButton>
             </form>
+
+            {contactStatus && (
+              <p className="mt-4 text-center text-sm text-zinc-600 dark:text-zinc-400">{contactStatus}</p>
+            )}
 
             <div className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800">
               <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-zinc-600 dark:text-zinc-400">
