@@ -33,11 +33,14 @@ import FloatingParticles from '@/components/FloatingParticles';
 import Preloader from '@/components/Preloader';
 import dynamic from 'next/dynamic';
 const ChatWidget = dynamic(() => import('../components/ChatWidget'), { ssr: false });
+import CalendarModal from '@/components/CalendarModal';
+import CredibilityBar from '@/components/CredibilityBar';
 import { TypeAnimation } from 'react-type-animation';
 
 export default function Home() {
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const [contactStatus, setContactStatus] = useState<string | null>(null);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -278,10 +281,11 @@ export default function Home() {
               className="flex flex-wrap gap-4 justify-center mb-12"
             >
               <MagneticButton
-                href="#contact"
-                  className="group relative px-8 py-4 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold overflow-hidden w-full sm:w-auto text-center"
+                onClick={() => setIsCalendarOpen(true)}
+                className="group relative px-8 py-4 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold overflow-hidden w-full sm:w-auto text-center flex items-center justify-center gap-2"
               >
-                <span className="relative z-10">Let's Work Together</span>
+                <Calendar size={18} />
+                <span className="relative z-10">Book a 30-min Call</span>
               </MagneticButton>
               <MagneticButton
                 href="#projects"
@@ -295,6 +299,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="px-8 py-4 border-2 border-zinc-200 dark:border-zinc-800 rounded-lg font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
               >
+                <Download size={18} />
                 Resume
               </MagneticButton>
             </motion.div>
@@ -327,6 +332,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      <CredibilityBar />
 
       {/* Stats Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 border-y border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
@@ -691,15 +698,28 @@ export default function Home() {
                 />
               </div>
 
-              <MagneticButton className="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold flex items-center justify-center gap-2" 
-                onClick={() => {}}>
+              <button 
+                type="submit"
+                disabled={contactSubmitting}
+                className="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold flex items-center justify-center gap-2 hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 <Send size={20} />
                 {contactSubmitting ? 'Sending...' : 'Send Message'}
-              </MagneticButton>
+              </button>
             </form>
 
             {contactStatus && (
-              <p className="mt-4 text-center text-sm text-zinc-600 dark:text-zinc-400">{contactStatus}</p>
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`mt-4 text-center text-sm font-medium ${
+                  contactStatus.includes('Thanks') || contactStatus.includes('success')
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-red-600 dark:text-red-400'
+                }`}
+              >
+                {contactStatus}
+              </motion.p>
             )}
 
             <div className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800">
@@ -741,6 +761,7 @@ export default function Home() {
           <p>© {new Date().getFullYear()} Neel Shah. All rights reserved.</p>
     </div>
       </footer>
+      <CalendarModal isOpen={isCalendarOpen} onClose={() => setIsCalendarOpen(false)} url={process.env.NEXT_PUBLIC_CAL_URL} />
       <ChatWidget />
     </>
   );
