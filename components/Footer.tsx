@@ -64,7 +64,7 @@ export default function Footer() {
             © 2026 {PORTFOLIO_DATA.personal.name}. All rights reserved.
           </div>
           <div>
-            Built with systems thinking, zero buzzwords &amp; measured throughput.
+            Built with systems thinking, zero buzzwords &amp; measured throughput. 
           </div>
         </div>
       </div>
