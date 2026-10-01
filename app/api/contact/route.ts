@@ -28,16 +28,14 @@ export async function POST(req: Request) {
       )
     `;
 
-    const rows = await sql<{
-      id: string;
-      created_at: string;
-    }[]>`
+    const rows = await sql`
       insert into contacts (name, email, subject, message)
       values (${name}, ${email}, ${subject || ''}, ${message})
       returning id, created_at
     `;
 
-    return Response.json({ ok: true, contactId: rows[0].id, createdAt: rows[0].created_at }, { status: 201 });
+    const inserted = (rows as unknown as Array<{ id: string; created_at: string }>)[0];
+    return Response.json({ ok: true, contactId: inserted?.id, createdAt: inserted?.created_at }, { status: 201 });
   } catch (e: any) {
     return bad(`Error connecting to database: ${e?.message || 'unknown error'}`, 500);
   }

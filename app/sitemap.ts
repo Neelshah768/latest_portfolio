@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://neelshah.dev'; // Update with your actual domain
+  const baseUrl = 'https://neelshah.dev';
 
   return [
     {
@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/#about`,
+      url: `${baseUrl}/#profile`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
@@ -20,25 +20,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/#experience`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.9,
     },
     {
-      url: `${baseUrl}/#projects`,
+      url: `${baseUrl}/#case-studies`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.9,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/#capabilities`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/#playground`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/#skills`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/#hire`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
+      priority: 0.75,
     },
     {
       url: `${baseUrl}/#contact`,
@@ -48,4 +54,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 }
-

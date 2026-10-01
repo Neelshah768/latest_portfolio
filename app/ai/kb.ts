@@ -1,94 +1,101 @@
-export type PortfolioKB = {
-  identity: { name: string; title: string; location: string; headline: string };
-  summary: string;
-  skills: Record<"frontend" | "backend" | "cloud" | "databases" | "tools", string[]>;
-  outcomes: { metric: string; context?: string }[];
-  experience: { title: string; company: string; location?: string; period: string; impact: string[] }[];
-  projects: { name: string; stack: string[]; problem: string; solution: string; outcomes: string[]; links?: { live?: string; repo?: string } }[];
-  services: { type: "Full-Time" | "Part-Time" | "Freelance"; notes?: string }[];
-  industries?: string[];
-  education?: { degree: string; org: string; year?: string }[];
-  certifications?: string[];
-  faq: { q: string; a: string }[];
-  contact: { email: string; linkedin: string; github: string };
-  tone: { style: string; do: string[]; dont: string[] };
-};
+import { PORTFOLIO_DATA } from '@/data/portfolioData';
 
-export const kb: PortfolioKB = {
+export const kb = {
   identity: {
-    name: "Neel Shah",
-    title: "Software Engineer",
-    location: "Ahmedabad, India",
-    headline: "React, React Native, Java Spring Boot, Azure; microservices & performance.",
+    name: PORTFOLIO_DATA.personal.name,
+    title: PORTFOLIO_DATA.personal.role,
+    location: PORTFOLIO_DATA.personal.location,
+    headline: PORTFOLIO_DATA.personal.headline,
   },
   summary:
-    "3+ years building scalable apps with 99.9% uptime. Focused on performance, SSO/SCIM, and delivery speed.",
-  skills: {
-    frontend: ["React", "React Native", "TypeScript", "Redux", "WebRTC"],
-    backend: ["Java Spring Boot", "Node.js", "REST APIs", "Microservices"],
-    cloud: ["Azure", "Azure AD B2C", "Jenkins", "CI/CD", "AWS"],
-    databases: ["MySQL", "MongoDB", "Elasticsearch"],
-    tools: ["Git", "VS Code"],
-  },
-  outcomes: [
-    { metric: "60% load-time reduction" },
-    { metric: "99.9% system uptime" },
-    { metric: "Led 14+ member team" },
-    { metric: "50% scalability improvement" },
-  ],
-  experience: [
+    'Backend & Distributed Systems Engineer with enterprise experience building scalable backend systems, identity platforms (IAM/SCIM/SSO), high-throughput applications, and AI-enabled workflows with Java 21, Spring Boot 3, Google Gemini API, AWS, and Azure.',
+  skills: PORTFOLIO_DATA.skillsByCategory,
+  outcomes: PORTFOLIO_DATA.verifiedMetrics.map((m) => ({
+    metric: `${m.value} ${m.label}`,
+    context: m.detail,
+  })),
+  experience: PORTFOLIO_DATA.experience.map((e) => ({
+    title: e.role,
+    company: e.company,
+    location: e.location,
+    period: e.period,
+    project: e.project,
+    impact: e.overview.concat(e.impactPoints),
+  })),
+  projects: [
     {
-      title: "Full‑Stack Software Developer",
-      company: "PrometheanTech",
-      location: "Gandhinagar, India",
-      period: "Jul 2022 – Present",
-      impact: [
-        "Promoted from Frontend to Senior Full‑Stack within 3 years.",
-        "Architected fund & assets management; SCIM + Azure AD B2C SSO.",
-        "Cut bug reports by 70% via CI/CD hardening.",
+      name: PORTFOLIO_DATA.caseStudies.seventyThreeStrings.title,
+      subtitle: PORTFOLIO_DATA.caseStudies.seventyThreeStrings.subtitle,
+      stack: PORTFOLIO_DATA.caseStudies.seventyThreeStrings.tags,
+      problem: PORTFOLIO_DATA.caseStudies.seventyThreeStrings.problem,
+      architecture: PORTFOLIO_DATA.caseStudies.seventyThreeStrings.architecture.description,
+      outcomes: [
+        'Over 50% API response time reduction via SQL N+1 resolution & indexing',
+        'Engineered SCIM 2.0 auto-provisioning microservice in Java 21 & Spring Boot 3',
+        'Automated SAML SSO onboarding via Azure AD B2C custom policies and Microsoft Graph API',
+        'Streamed Elasticsearch audit data to AWS S3 in 10,000-record batches for Splunk ingestion',
+      ],
+      metrics: PORTFOLIO_DATA.caseStudies.seventyThreeStrings.metrics,
+    },
+    {
+      name: PORTFOLIO_DATA.caseStudies.livcast.title,
+      subtitle: PORTFOLIO_DATA.caseStudies.livcast.subtitle,
+      stack: PORTFOLIO_DATA.caseStudies.livcast.tags,
+      problem: PORTFOLIO_DATA.caseStudies.livcast.problem,
+      architecture: PORTFOLIO_DATA.caseStudies.livcast.architecture.description,
+      outcomes: [
+        'Concurrent live RTMP broadcast to YouTube, Facebook, and Twitch',
+        'Automated video transcoding and pre-recorded scheduling pipeline with FFmpeg',
+        'Direct multipart chunked video uploads to AWS S3',
+      ],
+    },
+    {
+      name: PORTFOLIO_DATA.caseStudies.aiCustomerSupport.title,
+      subtitle: PORTFOLIO_DATA.caseStudies.aiCustomerSupport.subtitle,
+      stack: PORTFOLIO_DATA.caseStudies.aiCustomerSupport.tags,
+      problem: PORTFOLIO_DATA.caseStudies.aiCustomerSupport.problem,
+      architecture: PORTFOLIO_DATA.caseStudies.aiCustomerSupport.architecture.description,
+      outcomes: [
+        'Continuous support email monitoring and zero-shot intent classification',
+        'Knowledge-grounded response generation via Google Gemini API',
+        'Deterministic human escalation: unanswerable requests immediately create Jira tickets and notify customers',
       ],
     },
   ],
-  projects: [
-    {
-      name: "73Strings – Fund & Assets Management",
-      stack: ["Spring Boot", "React", "Azure AD B2C", "Elasticsearch"],
-      problem: "Enterprise SSO and scalable search across assets.",
-      solution: "Microservices with Elasticsearch + secure identity flows.",
-      outcomes: ["80% faster search", "Reduced login failures by 20%"],
-      links: { live: "#", repo: "#" },
-    },
-    {
-      name: "LivCast – Live Streaming",
-      stack: ["React Native", "WebRTC", "AWS"],
-      problem: "Low-latency streaming with high reliability.",
-      solution: "Optimized client + infra; lazy loading & reusable components.",
-      outcomes: ["99.9% uptime", "65% faster initial load"],
-    },
-  ],
-  services: [{ type: "Full-Time" }, { type: "Part-Time" }, { type: "Freelance" }],
-  industries: ["Fintech", "Streaming", "Enterprise SaaS"],
-  education: [{ degree: "B.Tech Computer Science", org: "Silver Oak University", year: "2022" }],
-  certifications: [],
-  faq: [
-    { q: "Availability?", a: "Open to full-time, part-time and freelance." },
-    { q: "Typical stack?", a: "React/TypeScript, Spring Boot, Azure; microservices & CI/CD." },
-    { q: "How do you approach performance?", a: "Measure → profile → optimize; caching, lazy load, SSR as needed." },
-  ],
+  services: PORTFOLIO_DATA.whatICanHelpWith,
+  education: [{ degree: 'B.Tech Computer Science', org: 'Silver Oak University', year: '2022' }],
   contact: {
-    email: "shahneel20135@gmail.com",
-    linkedin: "https://www.linkedin.com/in/neel-shah-215099192/",
-    github: "https://github.com/Neelshah768",
+    email: PORTFOLIO_DATA.socials.email,
+    linkedin: PORTFOLIO_DATA.socials.linkedin,
+    github: PORTFOLIO_DATA.socials.github,
+    location: PORTFOLIO_DATA.personal.location,
   },
+  faq: [
+    {
+      q: 'What is Neel\'s primary engineering focus?',
+      a: 'Neel is primarily a Backend & Distributed Systems Engineer, focusing on Java 21, Spring Boot 3, microservices, enterprise IAM (SCIM 2.0, SAML SSO), caching (Redis), and cloud pipelines. He also integrates modern LLM capabilities into real business workflows.',
+    },
+    {
+      q: 'Is Neel an AI/ML Engineer?',
+      a: 'No. Neel is a Backend & Distributed Systems Engineer. AI integration (e.g. Gemini API, workflow automation) is an additional software engineering capability he uses to automate business processes responsibly.',
+    },
+    {
+      q: 'Tell me about the AI Customer Support Automation project.',
+      a: 'It is a backend automation system that continuously monitors customer emails, classifies intent, checks a knowledge base to generate responses via Google Gemini, or automatically routes unresolved issues to humans via Jira with customer acknowledgment.',
+    },
+  ],
   tone: {
-    style: "Concise, professional, confident.",
-    do: ["Cite concrete outcomes", "Answer in 2–5 short sentences", "Invite contact when relevant"],
-    dont: ["Invent facts", "Share confidential details", "Overclaim"],
+    style: 'Direct, technical, rigorous, confident without buzzwords.',
+    do: ['Reference concrete engineering metrics and architectural patterns', 'Explain technical tradeoffs accurately'],
+    dont: ['Invent metrics or companies', 'Use generic corporate fluff', 'Label Neel as an AI/ML researcher or specialist'],
   },
 };
 
 export function buildSystemPrompt() {
-  return `You are Neel Shah's portfolio assistant. Use ONLY the KB to answer. If uncertain, say you don't have that info and offer contact details. Keep replies concise and friendly.\n\nKB:\n${JSON.stringify(kb)}`;
+  return `You are Neel Shah's portfolio assistant. You represent a serious Backend & Distributed Systems Engineer who builds enterprise systems, identity infrastructure (SCIM 2.0, SSO), microservices, and AI-enabled backend workflows.
+Remember: Neel is NOT an AI/ML engineer; he is a Backend & Distributed Systems Engineer who integrates LLMs into real business workflows.
+Use ONLY the factual knowledge base provided. If asked about something not in the knowledge base, state clearly that you do not have that information and invite the user to contact Neel directly at ${PORTFOLIO_DATA.socials.email}.
+
+Knowledge Base:
+${JSON.stringify(kb, null, 2)}`;
 }
-
-
