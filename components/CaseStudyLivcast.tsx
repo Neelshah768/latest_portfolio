@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Video,
@@ -16,11 +16,30 @@ import {
   CreditCard,
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import { trackCaseStudyView, trackCaseStudyClick } from '@/lib/analytics';
 
 type LivcastTab = 'overview' | 'architecture' | 'pipeline' | 'performance' | 'billing';
 
 export default function CaseStudyLivcast() {
   const [activeTab, setActiveTab] = useState<LivcastTab>('overview');
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          trackCaseStudyView('Livcast');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const cs = PORTFOLIO_DATA.caseStudies.livcast;
 
   const tabList: { id: LivcastTab; label: string; icon: React.ReactNode }[] = [
@@ -32,7 +51,7 @@ export default function CaseStudyLivcast() {
   ];
 
   return (
-    <div className="bg-[#0b0b10] border border-[#22222a] rounded-2xl overflow-hidden shadow-2xl">
+    <div ref={containerRef} className="bg-[#0b0b10] border border-[#22222a] rounded-2xl overflow-hidden shadow-2xl">
       {/* Banner */}
       <div className="p-6 sm:p-10 border-b border-[#1c1c24] bg-gradient-to-br from-[#0e0e16] via-[#0b0b10] to-[#08080c]">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
@@ -162,7 +181,10 @@ export default function CaseStudyLivcast() {
             <button
               key={tab.id}
               type="button"
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                setActiveTab(tab.id);
+                trackCaseStudyClick('Livcast', `tab_${tab.id}`);
+              }}
               className={`flex items-center gap-2 px-5 py-3.5 text-xs font-mono whitespace-nowrap transition-all border-b-2 ${
                 isActive
                   ? 'border-sky-500 text-white bg-[#14141e] font-semibold'

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, X, ExternalLink, FileText, Briefcase, GraduationCap, Eye } from 'lucide-react';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import { trackCVDownload } from '@/lib/analytics';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -192,6 +193,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 <a
                   href={PORTFOLIO_DATA.socials.resumeUrl}
                   download="NeelShah_CV.pdf"
+                  onClick={() => trackCVDownload('modal', 'NeelShah_CV.pdf')}
                   className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all shadow-[0_0_12px_rgba(59,130,246,0.3)] flex items-center gap-1.5"
                 >
                   <Download className="w-3.5 h-3.5" />

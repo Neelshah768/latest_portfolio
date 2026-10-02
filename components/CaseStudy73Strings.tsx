@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield,
@@ -17,12 +17,30 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import { trackCaseStudyView, trackCaseStudyClick } from '@/lib/analytics';
 
 type CaseTab = 'problem' | 'architecture' | 'contributions' | 'performance' | 'identity' | 'observability';
 
 export default function CaseStudy73Strings() {
   const [activeTab, setActiveTab] = useState<CaseTab>('problem');
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          trackCaseStudyView('73Strings');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const cs = PORTFOLIO_DATA.caseStudies.seventyThreeStrings;
 
@@ -36,7 +54,7 @@ export default function CaseStudy73Strings() {
   ];
 
   return (
-    <div className="bg-[#0b0b10] border border-[#22222a] rounded-2xl overflow-hidden shadow-2xl mb-16">
+    <div ref={containerRef} className="bg-[#0b0b10] border border-[#22222a] rounded-2xl overflow-hidden shadow-2xl mb-16">
       {/* Flagship Header Banner */}
       <div className="p-6 sm:p-10 border-b border-[#1c1c24] bg-gradient-to-br from-[#0e0e16] via-[#0b0b10] to-[#08080c]">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
@@ -238,7 +256,10 @@ export default function CaseStudy73Strings() {
             <button
               key={tab.id}
               type="button"
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                setActiveTab(tab.id);
+                trackCaseStudyClick('73Strings', `tab_${tab.id}`);
+              }}
               className={`flex items-center gap-2 px-5 py-3.5 text-xs font-mono whitespace-nowrap transition-all border-b-2 ${
                 isActive
                   ? 'border-blue-500 text-white bg-[#14141e] font-semibold'

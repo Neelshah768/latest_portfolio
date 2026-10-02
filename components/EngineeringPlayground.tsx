@@ -16,6 +16,7 @@ import {
   HardDrive,
   Cpu,
 } from 'lucide-react';
+import { trackPlaygroundInteraction } from '@/lib/analytics';
 
 export default function EngineeringPlayground() {
   const [activeDemo, setActiveDemo] = useState<'scim' | 'cache' | 'microservices' | 'nplusone'>('scim');
@@ -26,6 +27,7 @@ export default function EngineeringPlayground() {
 
   const runScimSimulation = () => {
     if (scimRunning) return;
+    trackPlaygroundInteraction('scim_flow', 'simulate');
     setScimRunning(true);
     setScimStep(1);
 
@@ -52,6 +54,7 @@ export default function EngineeringPlayground() {
 
   const runCacheSimulation = () => {
     if (cacheRunning) return;
+    trackPlaygroundInteraction('redis_demo', isCacheWarm ? 'cache_hit_test' : 'cache_miss_test');
     setCacheRunning(true);
     setCacheStatus('idle');
 
@@ -98,7 +101,10 @@ export default function EngineeringPlayground() {
             <button
               key={item.id}
               type="button"
-              onClick={() => setActiveDemo(item.id as any)}
+              onClick={() => {
+                setActiveDemo(item.id as any);
+                trackPlaygroundInteraction(item.id, 'switch_tab');
+              }}
               className={`flex-1 py-2 px-3 text-xs font-mono font-medium rounded-lg transition-all ${
                 activeDemo === item.id
                   ? 'bg-blue-600 text-white shadow-md'

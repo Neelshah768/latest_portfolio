@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github, Send, Copy, Check, MapPin, ArrowUpRight, AlertCircle } from 'lucide-react';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import { trackContactFormSubmit, trackOutboundLink } from '@/lib/analytics';
 
 export default function ContactSection() {
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -13,6 +14,7 @@ export default function ContactSection() {
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PORTFOLIO_DATA.socials.email);
     setCopiedEmail(true);
+    trackOutboundLink('email');
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
@@ -35,6 +37,8 @@ export default function ContactSection() {
       setSubmitting(false);
       return;
     }
+
+    trackContactFormSubmit('contact_form');
 
     try {
       const res = await fetch('/api/contact', {
@@ -139,6 +143,7 @@ export default function ContactSection() {
                 href={PORTFOLIO_DATA.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackOutboundLink('linkedin')}
                 className="p-3 bg-[#111118] border border-[#20202a] hover:border-zinc-500 rounded-lg flex items-center justify-between transition-colors group"
               >
                 <div className="flex items-center gap-2.5">
@@ -155,6 +160,7 @@ export default function ContactSection() {
                 href={PORTFOLIO_DATA.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackOutboundLink('github')}
                 className="p-3 bg-[#111118] border border-[#20202a] hover:border-zinc-500 rounded-lg flex items-center justify-between transition-colors group"
               >
                 <div className="flex items-center gap-2.5">

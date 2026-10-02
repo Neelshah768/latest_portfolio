@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Download, Linkedin, Github, FileText, ArrowUpRight } from 'lucide-react';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import { trackCVDownload, trackOutboundLink } from '@/lib/analytics';
 import ResumeModal from './ResumeModal';
 
 export default function ResumeSection() {
@@ -35,6 +36,7 @@ export default function ResumeSection() {
             <a
               href={PORTFOLIO_DATA.socials.resumeUrl}
               download="NeelShah_CV.pdf"
+              onClick={() => trackCVDownload('resume_section', 'NeelShah_CV.pdf')}
               className="px-5 py-2.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] flex items-center gap-2"
             >
               <Download className="w-3.5 h-3.5" />
@@ -55,6 +57,7 @@ export default function ResumeSection() {
               href={PORTFOLIO_DATA.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackOutboundLink('linkedin')}
               className="px-3.5 py-2.5 text-xs font-mono text-zinc-300 hover:text-white border border-[#252530] hover:border-zinc-500 rounded-lg transition-colors flex items-center gap-1.5 bg-[#121218]"
               aria-label="LinkedIn Profile"
             >

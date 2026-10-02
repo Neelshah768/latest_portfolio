@@ -26,6 +26,7 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import ResumeModal from '@/components/ResumeModal';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import { trackHeroCTA, trackCVDownload, trackOutboundLink } from '@/lib/analytics';
 
 const ChatWidget = dynamic(() => import('@/components/ChatWidget'), { ssr: false });
 
@@ -131,6 +132,7 @@ export default function Home() {
                 >
                   <a
                     href="#case-studies"
+                    onClick={() => trackHeroCTA('view_work')}
                     className="px-6 py-3 text-xs font-semibold tracking-wide text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all shadow-[0_0_20px_rgba(59,130,246,0.35)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] flex items-center gap-2"
                   >
                     <span>VIEW MY WORK</span>
@@ -140,6 +142,10 @@ export default function Home() {
                   <a
                     href={PORTFOLIO_DATA.socials.resumeUrl}
                     download="NeelShah_CV.pdf"
+                    onClick={() => {
+                      trackHeroCTA('download_cv');
+                      trackCVDownload('hero', 'NeelShah_CV.pdf');
+                    }}
                     className="px-5 py-3 text-xs font-mono font-semibold text-zinc-300 hover:text-white bg-[#121218] border border-[#262634] hover:border-zinc-500 rounded-lg transition-colors flex items-center gap-2"
                   >
                     <Download className="w-3.5 h-3.5 text-blue-400" />
@@ -150,6 +156,10 @@ export default function Home() {
                     href={PORTFOLIO_DATA.socials.github}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => {
+                      trackHeroCTA('github');
+                      trackOutboundLink('github');
+                    }}
                     className="p-3 text-zinc-400 hover:text-white bg-[#121218] border border-[#262634] hover:border-zinc-500 rounded-lg transition-colors"
                     aria-label="GitHub Profile"
                   >

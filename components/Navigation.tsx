@@ -4,6 +4,12 @@ import { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import {
+  trackNavigationClick,
+  trackNavbarCTA,
+  trackContactCTAClick,
+  trackCVDownload,
+} from '@/lib/analytics';
 
 const NAV_LINKS = [
   { name: 'Profile', href: '#profile' },
@@ -106,6 +112,7 @@ export default function Navigation() {
                   <a
                     key={link.name}
                     href={link.href}
+                    onClick={() => trackNavigationClick(link.name.toLowerCase())}
                     className={`relative px-3.5 py-1.5 text-xs font-medium tracking-wide transition-colors rounded-md ${
                       isActive
                         ? 'text-white font-semibold'
@@ -131,6 +138,7 @@ export default function Navigation() {
                 href={PORTFOLIO_DATA.socials.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackCVDownload('navbar', 'NeelShah_CV.pdf')}
                 className="px-3 py-1.5 text-xs font-mono text-zinc-300 hover:text-white border border-[#272730] hover:border-zinc-500 rounded-md transition-colors flex items-center gap-1.5 bg-[#0f0f13]"
               >
                 <span>CV</span>
@@ -139,6 +147,10 @@ export default function Navigation() {
 
               <a
                 href="#contact"
+                onClick={() => {
+                  trackNavbarCTA('lets_talk');
+                  trackContactCTAClick('navbar');
+                }}
                 className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-md transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] flex items-center gap-1.5"
               >
                 <span>Let&apos;s Talk</span>
@@ -149,6 +161,10 @@ export default function Navigation() {
             <div className="flex items-center gap-2 lg:hidden">
               <a
                 href="#contact"
+                onClick={() => {
+                  trackNavbarCTA('lets_talk');
+                  trackContactCTAClick('navbar');
+                }}
                 className="px-3 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-500 sm:hidden"
               >
                 Talk
@@ -188,7 +204,10 @@ export default function Navigation() {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    trackNavigationClick(link.name.toLowerCase());
+                    setIsOpen(false);
+                  }}
                   className="block px-3 py-3 text-lg font-medium text-zinc-300 hover:text-white hover:bg-[#14141a] rounded-lg transition-colors border-b border-[#1b1b22]/50"
                 >
                   {link.name}
@@ -210,14 +229,21 @@ export default function Navigation() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-2.5 text-center text-xs font-mono text-zinc-300 border border-[#272730] bg-[#121217] rounded-md"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    trackCVDownload('navbar', 'NeelShah_CV.pdf');
+                    setIsOpen(false);
+                  }}
                 >
                   View CV
                 </a>
                 <a
                   href="#contact"
                   className="w-full py-2.5 text-center text-xs font-semibold text-white bg-blue-600 rounded-md"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    trackNavbarCTA('lets_talk');
+                    trackContactCTAClick('navbar');
+                    setIsOpen(false);
+                  }}
                 >
                   Contact
                 </a>

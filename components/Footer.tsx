@@ -1,6 +1,7 @@
 'use client';
 
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import { trackOutboundLink, trackCVDownload } from '@/lib/analytics';
 
 export default function Footer() {
   return (
@@ -30,6 +31,7 @@ export default function Footer() {
               href={PORTFOLIO_DATA.socials.github}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackOutboundLink('github')}
               className="text-zinc-400 hover:text-white transition-colors"
             >
               GitHub
@@ -38,12 +40,14 @@ export default function Footer() {
               href={PORTFOLIO_DATA.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackOutboundLink('linkedin')}
               className="text-zinc-400 hover:text-white transition-colors"
             >
               LinkedIn
             </a>
             <a
               href={`mailto:${PORTFOLIO_DATA.socials.email}`}
+              onClick={() => trackOutboundLink('email')}
               className="text-zinc-400 hover:text-white transition-colors"
             >
               Email
@@ -52,6 +56,10 @@ export default function Footer() {
               href={PORTFOLIO_DATA.socials.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                trackCVDownload('footer', 'NeelShah_CV.pdf');
+                trackOutboundLink('other');
+              }}
               className="text-zinc-400 hover:text-white transition-colors"
             >
               Resume
