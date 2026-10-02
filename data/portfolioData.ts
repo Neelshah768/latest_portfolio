@@ -76,6 +76,25 @@ export interface HelpServiceItem {
   highlights: string[];
 }
 
+export interface ImpactCard {
+  title: string;
+  description: string;
+  tag: string;
+  iconName: 'ShieldCheck' | 'UserCheck' | 'Lock' | 'Box' | 'Terminal';
+}
+
+export interface EngineeringImpactData {
+  title: string;
+  subtitle: string;
+  highlight: {
+    statement: string;
+    subline: string;
+    attribution: string;
+    attributionLabel: string;
+  };
+  cards: ImpactCard[];
+}
+
 export const PORTFOLIO_DATA = {
   personal: {
     name: 'Neel Shah',
@@ -182,6 +201,54 @@ export const PORTFOLIO_DATA = {
       ],
     },
   ],
+
+  engineeringImpact: {
+    title: 'ENGINEERING IMPACT',
+    subtitle: 'How I contribute beyond writing code.',
+    highlight: {
+      statement: 'Trusted to own complex identity workflows.',
+      subline: 'Application Engineering • Azure B2C • SSO • Troubleshooting • Ownership',
+      attribution: 'Professional Feedback',
+      attributionLabel: 'Internal engineering feedback',
+    },
+    cards: [
+      {
+        title: 'Azure B2C Engineering',
+        description:
+          'Strong ownership of Azure B2C implementations, including complex edge cases, exception handling, and authentication flows.',
+        tag: 'Identity & Access',
+        iconName: 'ShieldCheck' as const,
+      },
+      {
+        title: 'Auto-Onboarding',
+        description:
+          'Contributed to auto-onboarding improvements designed to make the B2C user experience more reliable and streamlined.',
+        tag: 'User Lifecycle',
+        iconName: 'UserCheck' as const,
+      },
+      {
+        title: 'Enterprise SSO',
+        description:
+          'Supported Okta SSO integration and worked through authentication-flow issues to ensure reliable login behavior.',
+        tag: 'Federated Auth',
+        iconName: 'Lock' as const,
+      },
+      {
+        title: 'Module Ownership',
+        description:
+          'Owns a key B2C resource/module and can drive the solution through completion, including Roles & Responsibilities.',
+        tag: 'Domain Execution',
+        iconName: 'Box' as const,
+      },
+      {
+        title: 'Problem Solving',
+        description:
+          'Strong investigation and troubleshooting skills, particularly when diagnosing and resolving complex exceptions.',
+        tag: 'Root Cause Analysis',
+        iconName: 'Terminal' as const,
+      },
+    ],
+  },
 
   caseStudies: {
     seventyThreeStrings: {

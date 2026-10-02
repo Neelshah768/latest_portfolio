@@ -13,6 +13,7 @@ import HeroArchitectureVisual from '@/components/HeroArchitectureVisual';
 import MetricStrip from '@/components/MetricStrip';
 import EngineeringProfile from '@/components/EngineeringProfile';
 import ExperienceSection from '@/components/ExperienceSection';
+import EngineeringImpactSection from '@/components/EngineeringImpactSection';
 import CaseStudy73Strings from '@/components/CaseStudy73Strings';
 import CaseStudyLivcast from '@/components/CaseStudyLivcast';
 import CaseStudyAiSupport from '@/components/CaseStudyAiSupport';
@@ -184,6 +185,11 @@ export default function Home() {
         {/* 02 // EXPERIENCE                                  */}
         {/* ================================================== */}
         <ExperienceSection />
+
+        {/* ================================================== */}
+        {/* ENGINEERING IMPACT                                 */}
+        {/* ================================================== */}
+        <EngineeringImpactSection />
 
         {/* ================================================== */}
         {/* 03 // CASE STUDIES                                */}

@@ -98,6 +98,24 @@ function getKnowledgeBaseResponse(userQuery: string): string {
   }
 
   if (
+    query.includes('impact') ||
+    query.includes('feedback') ||
+    query.includes('b2c') ||
+    query.includes('review') ||
+    query.includes('praise') ||
+    query.includes('troubleshoot')
+  ) {
+    return (
+      "Neel's verified engineering feedback highlights 5 core impact areas beyond writing code:\n\n" +
+      "1. Azure B2C Engineering: Strong ownership of Azure B2C implementations, including complex edge cases, exception handling, and authentication flows.\n" +
+      "2. Auto-Onboarding: Contributed to auto-onboarding improvements designed to make the B2C user experience more reliable and streamlined.\n" +
+      "3. Enterprise SSO: Supported Okta SSO integration and worked through authentication-flow issues to ensure reliable login behavior.\n" +
+      "4. Module Ownership: Owns a key B2C resource/module and drives solutions through completion, including Roles & Responsibilities.\n" +
+      "5. Problem Solving: Strong investigation and troubleshooting skills, particularly when diagnosing and resolving complex exceptions."
+    );
+  }
+
+  if (
     query.includes('contact') ||
     query.includes('email') ||
     query.includes('hire') ||

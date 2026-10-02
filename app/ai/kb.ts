@@ -63,6 +63,7 @@ export const kb = {
     },
   ],
   services: PORTFOLIO_DATA.whatICanHelpWith,
+  engineeringImpact: PORTFOLIO_DATA.engineeringImpact,
   education: [{ degree: 'B.Tech Computer Science', org: 'Silver Oak University', year: '2022' }],
   contact: {
     email: PORTFOLIO_DATA.socials.email,
@@ -82,6 +83,10 @@ export const kb = {
     {
       q: 'Tell me about the AI Customer Support Automation project.',
       a: 'It is a backend automation system that continuously monitors customer emails, classifies intent, checks a knowledge base to generate responses via Google Gemini, or automatically routes unresolved issues to humans via Jira with customer acknowledgment.',
+    },
+    {
+      q: 'What is Neel\'s verified impact on Azure B2C and identity engineering?',
+      a: 'Verified internal feedback highlights Neel\'s strong ownership of Azure B2C implementations—particularly with complex edge cases and exception handling—as well as contributions to auto-onboarding, Okta SSO integrations, and driving key B2C modules through completion.',
     },
   ],
   tone: {
