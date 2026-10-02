@@ -104,39 +104,217 @@ export default function HeroArchitectureVisual() {
         </div>
       </div>
 
-      {/* SVG Connecting Flow Lines with Data Packets */}
+      {/* SVG Connecting Flow Lines with Live Data Flow Packets */}
       <div className="relative">
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none z-0"
+          viewBox="0 0 1000 330"
+          preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
         >
           <defs>
             <linearGradient id="busLineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
               <stop offset="100%" stopColor="#1d4ed8" stopOpacity="0.2" />
             </linearGradient>
+
+            {/* Glowing filters for data packets */}
+            <filter id="bluePacketGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+            </filter>
+            <filter id="emeraldPacketGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+            </filter>
+
+            {/* Flow Paths for Animated Signals */}
+            {/* Flow 1: Gateway -> Ingress Bus -> UAM (Auth) -> Data Bus -> Redis */}
+            <path
+              id="path-flow-1"
+              d="M 500 52 L 500 82 L 200 82 L 200 110 L 200 200 L 200 225"
+              fill="none"
+            />
+            {/* Flow 2: Gateway -> SCIM 2.0 (Identity Lifecycle Sync) -> MySQL DB */}
+            <path
+              id="path-flow-2"
+              d="M 500 52 L 500 82 L 500 110 L 500 200 L 500 225"
+              fill="none"
+            />
+            {/* Flow 3: Event Egress -> Mid Bus -> Elasticsearch -> AWS S3 / Splunk SIEM */}
+            <path
+              id="path-flow-3"
+              d="M 500 175 L 500 200 L 780 200 L 780 225 L 780 290 L 780 320"
+              fill="none"
+            />
           </defs>
 
+          {/* Static Circuit Topology Lines */}
           {/* Vertical Bus from Gateway down to Tier 2 */}
-          <line x1="50%" y1="52" x2="50%" y2="82" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" strokeDasharray="3 3" />
-          {/* Horizontal Split */}
-          <line x1="20%" y1="82" x2="80%" y2="82" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
+          <line x1="500" y1="52" x2="500" y2="82" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" strokeDasharray="3 3" />
+          {/* Horizontal Split 1 */}
+          <line x1="200" y1="82" x2="800" y2="82" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
           {/* Down to UAM */}
-          <line x1="20%" y1="82" x2="20%" y2="110" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
+          <line x1="200" y1="82" x2="200" y2="110" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
           {/* Down to SCIM */}
-          <line x1="50%" y1="82" x2="50%" y2="110" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
+          <line x1="500" y1="82" x2="500" y2="110" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
           {/* Down to Scheduler */}
-          <line x1="80%" y1="82" x2="80%" y2="110" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
+          <line x1="800" y1="82" x2="800" y2="110" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
+
+          {/* Drops from Microservices to Mid Bus */}
+          <line x1="200" y1="175" x2="200" y2="200" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
+          <line x1="500" y1="175" x2="500" y2="200" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
+          <line x1="800" y1="175" x2="800" y2="200" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
 
           {/* Mid Bus to Data Tier */}
-          <line x1="50%" y1="175" x2="50%" y2="200" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
-          <line x1="22%" y1="200" x2="78%" y2="200" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" />
-          <line x1="22%" y1="200" x2="22%" y2="225" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" />
-          <line x1="50%" y1="200" x2="50%" y2="225" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" />
-          <line x1="78%" y1="200" x2="78%" y2="225" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" />
+          <line x1="200" y1="200" x2="780" y2="200" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" />
+          <line x1="200" y1="200" x2="200" y2="225" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" />
+          <line x1="500" y1="200" x2="500" y2="225" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" />
+          <line x1="780" y1="200" x2="780" y2="225" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" />
 
           {/* Lower Bus to SIEM Audit Pipeline */}
-          <line x1="78%" y1="290" x2="78%" y2="320" stroke="rgba(16, 185, 129, 0.4)" strokeWidth="1.5" strokeDasharray="3 3" />
+          <line x1="780" y1="290" x2="780" y2="320" stroke="rgba(16, 185, 129, 0.4)" strokeWidth="1.5" strokeDasharray="3 3" />
+
+          {/* ================================================== */}
+          {/* ANIMATED DATA-FLOW SIGNALS (LIVE PACKETS)         */}
+          {/* ================================================== */}
+
+          {/* FLOW 1: Auth & Ingress -> UAM -> Redis Cache Tier */}
+          <g className="arch-packet">
+            {/* Trailing micro-dot 2 */}
+            <circle r="0.9" fill="#3b82f6" opacity="0.35">
+              <animateMotion dur="3.4s" begin="-0.08s" repeatCount="indefinite">
+                <mpath href="#path-flow-1" xlinkHref="#path-flow-1" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 0.35; 0.35; 0.35; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.4s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            {/* Trailing micro-dot 1 */}
+            <circle r="1.4" fill="#60a5fa" opacity="0.55">
+              <animateMotion dur="3.4s" begin="-0.04s" repeatCount="indefinite">
+                <mpath href="#path-flow-1" xlinkHref="#path-flow-1" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 0.6; 0.6; 0.6; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.4s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            {/* Lead Packet Core */}
+            <g>
+              <circle r="4.2" fill="#3b82f6" opacity="0.35" filter="url(#bluePacketGlow)" />
+              <circle r="2.2" fill="#60a5fa" opacity="0.85" />
+              <circle r="1.2" fill="#ffffff" />
+              <animateMotion dur="3.4s" begin="0s" repeatCount="indefinite">
+                <mpath href="#path-flow-1" xlinkHref="#path-flow-1" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 1; 1; 1; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.4s"
+                repeatCount="indefinite"
+              />
+            </g>
+          </g>
+
+          {/* FLOW 2: Gateway -> SCIM 2.0 -> MySQL DB Relational Tier */}
+          <g className="arch-packet">
+            {/* Trailing micro-dot 2 */}
+            <circle r="0.9" fill="#0284c7" opacity="0.35">
+              <animateMotion dur="3.8s" begin="1.32s" repeatCount="indefinite">
+                <mpath href="#path-flow-2" xlinkHref="#path-flow-2" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 0.35; 0.35; 0.35; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.8s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            {/* Trailing micro-dot 1 */}
+            <circle r="1.4" fill="#38bdf8" opacity="0.55">
+              <animateMotion dur="3.8s" begin="1.36s" repeatCount="indefinite">
+                <mpath href="#path-flow-2" xlinkHref="#path-flow-2" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 0.6; 0.6; 0.6; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.8s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            {/* Lead Packet Core */}
+            <g>
+              <circle r="4.2" fill="#0284c7" opacity="0.35" filter="url(#bluePacketGlow)" />
+              <circle r="2.2" fill="#38bdf8" opacity="0.85" />
+              <circle r="1.2" fill="#ffffff" />
+              <animateMotion dur="3.8s" begin="1.4s" repeatCount="indefinite">
+                <mpath href="#path-flow-2" xlinkHref="#path-flow-2" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 1; 1; 1; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.8s"
+                repeatCount="indefinite"
+              />
+            </g>
+          </g>
+
+          {/* FLOW 3: Microservices Audit Emit -> Elasticsearch -> AWS S3 / Splunk SIEM */}
+          <g className="arch-packet">
+            {/* Trailing micro-dot 2 */}
+            <circle r="0.9" fill="#059669" opacity="0.35">
+              <animateMotion dur="3.0s" begin="0.62s" repeatCount="indefinite">
+                <mpath href="#path-flow-3" xlinkHref="#path-flow-3" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 0.35; 0.35; 0.35; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.0s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            {/* Trailing micro-dot 1 */}
+            <circle r="1.4" fill="#34d399" opacity="0.55">
+              <animateMotion dur="3.0s" begin="0.66s" repeatCount="indefinite">
+                <mpath href="#path-flow-3" xlinkHref="#path-flow-3" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 0.6; 0.6; 0.6; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.0s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            {/* Lead Packet Core */}
+            <g>
+              <circle r="4.2" fill="#059669" opacity="0.35" filter="url(#emeraldPacketGlow)" />
+              <circle r="2.2" fill="#34d399" opacity="0.85" />
+              <circle r="1.2" fill="#ffffff" />
+              <animateMotion dur="3.0s" begin="0.7s" repeatCount="indefinite">
+                <mpath href="#path-flow-3" xlinkHref="#path-flow-3" />
+              </animateMotion>
+              <animate
+                attributeName="opacity"
+                values="0; 1; 1; 1; 0"
+                keyTimes="0; 0.08; 0.85; 0.95; 1"
+                dur="3.0s"
+                repeatCount="indefinite"
+              />
+            </g>
+          </g>
         </svg>
 
         {/* Tier 1: Gateway */}
@@ -148,7 +326,7 @@ export default function HeroArchitectureVisual() {
             className={`flex items-center gap-2.5 px-4 py-2 rounded-lg font-mono text-xs transition-all border ${
               activeNode === 'gateway'
                 ? 'bg-blue-950/70 border-blue-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.4)]'
-                : 'bg-[#121217] border-[#252530] text-zinc-300 hover:border-zinc-500'
+                : 'bg-[#121217] border-[#252530] text-zinc-300 hover:border-zinc-500 pulse-gateway'
             }`}
           >
             <Server className="w-3.5 h-3.5 text-blue-400" />
@@ -169,7 +347,7 @@ export default function HeroArchitectureVisual() {
             className={`flex flex-col items-center text-center p-2.5 sm:p-3 rounded-lg font-mono text-xs transition-all border ${
               activeNode === 'uam'
                 ? 'bg-blue-950/60 border-blue-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500'
+                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500 pulse-uam'
             }`}
           >
             <ShieldCheck className="w-4 h-4 text-blue-400 mb-1" />
@@ -185,7 +363,7 @@ export default function HeroArchitectureVisual() {
             className={`flex flex-col items-center text-center p-2.5 sm:p-3 rounded-lg font-mono text-xs transition-all border ${
               activeNode === 'scim'
                 ? 'bg-blue-950/60 border-blue-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500'
+                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500 pulse-scim'
             }`}
           >
             <Cpu className="w-4 h-4 text-sky-400 mb-1" />
@@ -220,7 +398,7 @@ export default function HeroArchitectureVisual() {
             className={`flex flex-col items-center text-center p-2.5 sm:p-3 rounded-lg font-mono text-xs transition-all border ${
               activeNode === 'redis'
                 ? 'bg-red-950/40 border-red-400 text-white shadow-[0_0_15px_rgba(239,68,68,0.3)]'
-                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500'
+                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500 pulse-redis'
             }`}
           >
             <Database className="w-4 h-4 text-red-400 mb-1" />
@@ -236,7 +414,7 @@ export default function HeroArchitectureVisual() {
             className={`flex flex-col items-center text-center p-2.5 sm:p-3 rounded-lg font-mono text-xs transition-all border ${
               activeNode === 'mysql'
                 ? 'bg-blue-950/60 border-blue-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500'
+                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500 pulse-mysql'
             }`}
           >
             <Database className="w-4 h-4 text-blue-400 mb-1" />
@@ -252,7 +430,7 @@ export default function HeroArchitectureVisual() {
             className={`flex flex-col items-center text-center p-2.5 sm:p-3 rounded-lg font-mono text-xs transition-all border ${
               activeNode === 'es'
                 ? 'bg-amber-950/40 border-amber-400 text-white shadow-[0_0_15px_rgba(245,158,11,0.3)]'
-                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500'
+                : 'bg-[#121217] border-[#22222a] text-zinc-300 hover:border-zinc-500 pulse-es'
             }`}
           >
             <FileText className="w-4 h-4 text-amber-400 mb-1" />
@@ -270,7 +448,7 @@ export default function HeroArchitectureVisual() {
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono text-xs transition-all border ${
               activeNode === 'splunk'
                 ? 'bg-emerald-950/60 border-emerald-400 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]'
-                : 'bg-[#101015] border-[#202028] text-zinc-400 hover:border-zinc-500'
+                : 'bg-[#101015] border-[#202028] text-zinc-400 hover:border-zinc-500 pulse-splunk'
             }`}
           >
             <Cloud className="w-3.5 h-3.5 text-emerald-400" />
@@ -310,6 +488,60 @@ export default function HeroArchitectureVisual() {
           </code>
         </div>
       </motion.div>
+
+      {/* Node pulse animations synchronized with packet arrivals */}
+      <style>{`
+        @keyframes pulse-gateway {
+          0%, 2% { border-color: rgba(96, 165, 250, 0.55); box-shadow: 0 0 10px rgba(59, 130, 246, 0.22); }
+          6%, 100% { border-color: #252530; box-shadow: none; }
+        }
+        @keyframes pulse-uam {
+          0%, 68% { border-color: #22222a; box-shadow: none; }
+          74% { border-color: rgba(96, 165, 250, 0.55); box-shadow: 0 0 10px rgba(59, 130, 246, 0.22); }
+          80%, 100% { border-color: #22222a; box-shadow: none; }
+        }
+        @keyframes pulse-redis {
+          0%, 93% { border-color: #22222a; box-shadow: none; }
+          97% { border-color: rgba(239, 68, 68, 0.5); box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+          100% { border-color: #22222a; box-shadow: none; }
+        }
+        @keyframes pulse-scim {
+          0%, 28% { border-color: #22222a; box-shadow: none; }
+          34% { border-color: rgba(56, 189, 248, 0.55); box-shadow: 0 0 10px rgba(56, 189, 248, 0.22); }
+          40%, 100% { border-color: #22222a; box-shadow: none; }
+        }
+        @keyframes pulse-mysql {
+          0%, 90% { border-color: #22222a; box-shadow: none; }
+          95% { border-color: rgba(96, 165, 250, 0.55); box-shadow: 0 0 10px rgba(59, 130, 246, 0.22); }
+          100% { border-color: #22222a; box-shadow: none; }
+        }
+        @keyframes pulse-es {
+          0%, 72% { border-color: #22222a; box-shadow: none; }
+          78% { border-color: rgba(245, 158, 11, 0.5); box-shadow: 0 0 10px rgba(245, 158, 11, 0.2); }
+          84%, 100% { border-color: #22222a; box-shadow: none; }
+        }
+        @keyframes pulse-splunk {
+          0%, 91% { border-color: #202028; box-shadow: none; }
+          96% { border-color: rgba(16, 185, 129, 0.55); box-shadow: 0 0 10px rgba(16, 185, 129, 0.22); }
+          100% { border-color: #202028; box-shadow: none; }
+        }
+        .pulse-gateway { animation: pulse-gateway 3.4s infinite; }
+        .pulse-uam { animation: pulse-uam 3.4s infinite; }
+        .pulse-redis { animation: pulse-redis 3.4s infinite; }
+        .pulse-scim { animation: pulse-scim 3.8s infinite 1.4s; }
+        .pulse-mysql { animation: pulse-mysql 3.8s infinite 1.4s; }
+        .pulse-es { animation: pulse-es 3.0s infinite 0.7s; }
+        .pulse-splunk { animation: pulse-splunk 3.0s infinite 0.7s; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .arch-packet {
+            display: none !important;
+          }
+          .pulse-gateway, .pulse-uam, .pulse-redis, .pulse-scim, .pulse-mysql, .pulse-es, .pulse-splunk {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
